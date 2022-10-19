@@ -49,11 +49,7 @@ export const Card = memo<React.PropsWithChildren<CardProps>>(
     }, [elevationStyle, variant, outlinedStyle]);
 
     const containerStyle: StyleProp<ViewStyle> = useMemo(
-      () => [
-        { borderRadius, backgroundColor, overflow: "hidden" },
-        cardStyle,
-        style,
-      ],
+      () => [{ borderRadius, backgroundColor }, cardStyle, style],
       [backgroundColor, borderRadius, cardStyle, style]
     );
 
