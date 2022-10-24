@@ -5,6 +5,7 @@ import { CardProps } from "../Card";
 export interface PopoverProps extends CardProps {
     parentRef: React.RefObject<any>;
     open?: boolean;
+    solo?: boolean;
     containerStyle?: StyleProp<ViewStyle>;
     onClose?: () => void;
     arrowEnabled?: boolean;

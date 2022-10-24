@@ -16,7 +16,7 @@ export declare type SelectFieldProps<T = any> = {
     clearText?: string;
     clearable?: boolean;
     items: SelectFieldItemOptions[];
-    renderItem?: (item: SelectFieldItemOptions, selected: boolean) => void;
+    renderItem?: (item: SelectFieldItemOptions, selected?: boolean) => void;
 } & Omit<TextFieldProps, "value" | "onChange">;
 export declare const NativeSelectField: React.NamedExoticComponent<React.PropsWithChildren<SelectFieldProps<any>>>;
 export declare const SelectField: React.NamedExoticComponent<React.PropsWithChildren<SelectFieldProps<any>>>;

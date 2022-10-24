@@ -13,6 +13,7 @@ module.exports = {
     "**/stories.tsx",
     "coverage/",
     "cypress/",
+    "lib/",
     ".nyc_output/",
     "graphql/",
   ],

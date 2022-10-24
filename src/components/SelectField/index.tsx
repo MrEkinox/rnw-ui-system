@@ -35,7 +35,7 @@ export type SelectFieldProps<T = any> = {
   clearText?: string;
   clearable?: boolean;
   items: SelectFieldItemOptions[];
-  renderItem?: (item: SelectFieldItemOptions, selected: boolean) => void;
+  renderItem?: (item: SelectFieldItemOptions, selected?: boolean) => void;
 } & Omit<TextFieldProps, "value" | "onChange">;
 
 const getSelectedOptions = (
@@ -135,7 +135,7 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
     const fontColor = theme.palette.text;
 
     const currentItems = useMemo(() => {
-      let newItems = items;
+      let newItems: SelectFieldItemOptions[] = items;
       if (clearable && clearText && !isMobile) {
         newItems = [{ label: clearText || "", value: "clear" }, ...newItems];
       }

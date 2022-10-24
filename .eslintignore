@@ -1,2 +1,5 @@
 **/stories.tsx
 **/*.spec.tsx
+lib
+cypress
+coverage

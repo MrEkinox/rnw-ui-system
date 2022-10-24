@@ -25,6 +25,7 @@ export * from "./components/Chip";
 export * from "./components/CircularProgress";
 export * from "./components/Popover";
 export * from "./components/Slider";
+export * from "./components/Autocomplete";
 export * from "./components/List";
 export * from "./components/List/ListItem";
 export * from "./components/List/ListItemText";

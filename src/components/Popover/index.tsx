@@ -1,12 +1,12 @@
 import { Grow, GrowProps } from "../Grow";
 import React, { memo, useCallback, useMemo, useRef, useState } from "react";
 import {
+  Dimensions,
   FlexAlignType,
   Modal,
   Pressable,
   StyleProp,
   StyleSheet,
-  useWindowDimensions,
   View,
   ViewStyle,
 } from "react-native";
@@ -18,6 +18,7 @@ import { Icon } from "../Icon";
 export interface PopoverProps extends CardProps {
   parentRef: React.RefObject<any>;
   open?: boolean;
+  solo?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   onClose?: () => void;
   arrowEnabled?: boolean;
@@ -25,12 +26,76 @@ export interface PopoverProps extends CardProps {
   animation?: Omit<GrowProps, "visible">;
 }
 
+type RefDimensions = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+const getDimensions = (ref: React.RefObject<any>) => {
+  return new Promise<RefDimensions>((resolve) => {
+    if (ref?.current) {
+      ref.current?.measureInWindow((x, y, width, height) =>
+        resolve({ x, y, width, height })
+      );
+    } else resolve({ x: 0, y: 0, width: 0, height: 0 });
+  });
+};
+
+const getPosition = async (
+  parentRef: React.RefObject<any>,
+  popoverRef: React.RefObject<any>,
+  solo?: boolean
+) => {
+  const { width, height } = Dimensions.get("window");
+
+  const {
+    x: parentX,
+    y: parentY,
+    width: parentWidth,
+    height: parentHeight,
+  } = await getDimensions(parentRef);
+  const { width: childWidth, height: childHeight } = await getDimensions(
+    popoverRef
+  );
+
+  let directionY = "bottom";
+  let y = 0;
+  let x = parentX;
+  let directionX: FlexAlignType = "center";
+
+  if (parentY + childHeight <= height) {
+    y = solo ? 0 : parentY + parentHeight;
+    directionY = "bottom";
+  } else if (parentY - childHeight >= 0) {
+    y = solo ? -(childHeight + parentHeight) : parentY - childHeight;
+    directionY = "top";
+  } else if (!solo) {
+    y = height / 2 - childHeight / 2;
+    directionY = "center";
+  }
+  if (parentX + parentWidth / 2 - childWidth / 2 < width) {
+    x = solo ? 0 : parentX + parentWidth / 2 - childWidth / 2;
+    directionX = "center";
+  } else if (parentX + childWidth >= width) {
+    x = parentX + parentWidth / 2 - childWidth / 2;
+    directionX = "flex-end";
+  } else if (parentX - childWidth <= 0) {
+    x = parentX + childWidth / 2 + parentWidth / 2;
+    directionX = "flex-start";
+  }
+  console.log({ x, y, directionY, directionX });
+  return { x, y, directionY, directionX };
+};
+
 export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
   ({
     parentRef,
     open,
     onClose,
     children,
+    solo,
     containerStyle,
     arrowEnabled,
     animation,
@@ -42,12 +107,7 @@ export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
     const [inAnimation, setInAnimation] = useState(false);
     const theme = useTheme();
     const popoverRef = useRef<View>(null);
-    const { height: windowHeight, width: windowWidth } = useWindowDimensions();
     const { setScrollLocked } = useScrollLock();
-    const [parentDimensions, setParentDimensions] = useState({
-      width: 0,
-      height: 0,
-    });
     const [position, setPosition] = useState({
       x: 0,
       y: 0,
@@ -58,44 +118,11 @@ export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
     const arrowColor = theme.palette[color] || color;
     const borderRadius = theme.borderRadius;
 
-    const openPopover = useCallback(() => {
-      parentRef.current?.measureInWindow(
-        (px, py, parentWidth, parentHeight) => {
-          popoverRef.current?.measure((x2, y2, childWidth, childHeight) => {
-            console.log("openPopover");
-            let directionY = "bottom";
-            let y = 0;
-            let x = px;
-            let directionX: FlexAlignType = "center";
-            if (py + childHeight <= windowHeight) {
-              y = py + parentHeight;
-              directionY = "bottom";
-            } else if (py - childHeight >= 0) {
-              y = py - childHeight;
-              directionY = "top";
-            } else {
-              y = windowHeight / 2 - childHeight / 2;
-              directionY = "center";
-            }
-            if (px + parentWidth / 2 - childWidth / 2 < windowWidth) {
-              x = px + parentWidth / 2 - childWidth / 2;
-              directionX = "center";
-            } else if (px + childWidth >= windowWidth) {
-              x = px + parentWidth / 2 - childWidth / 2;
-              directionX = "flex-end";
-            } else if (px - childWidth <= 0) {
-              x = px + childWidth / 2 + parentWidth / 2;
-              console.log({ px, childWidth, parentWidth });
-              directionX = "flex-start";
-            }
-            console.log({ directionX });
-            setScrollLocked(true);
-            setPosition({ x, y, directionY, directionX });
-            setParentDimensions({ width: parentWidth, height: parentHeight });
-          });
-        }
-      );
-    }, [parentRef, setScrollLocked, windowHeight, windowWidth]);
+    const openPopover = useCallback(async () => {
+      const newPosition = await getPosition(parentRef, popoverRef, solo);
+      setScrollLocked(true);
+      setPosition(newPosition);
+    }, [parentRef, setScrollLocked, solo]);
 
     const dynamicArrowPosition = arrowPosition || position.directionX;
 
@@ -129,15 +156,15 @@ export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
     const popoverStyle = useMemo(
       (): StyleProp<ViewStyle> => [
         {
-          opacity: parentDimensions.width ? 1 : 0,
           position: "absolute",
-          minHeight: 50,
+          minHeight: 40,
           top: position.y,
           left: position.x,
+          zIndex: +99,
         },
         style,
       ],
-      [parentDimensions.width, position.x, position.y, style]
+      [position.x, position.y, style]
     );
 
     const cardStyle = useMemo(
@@ -161,17 +188,18 @@ export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
 
     if (!open && !inAnimation) return null;
 
+    const Container = !solo ? Modal : View;
+
     return (
-      <Modal
+      <Container
         nativeID="popover"
         visible
         onDismiss={closePopover}
         transparent
-        onShow={openPopover}
         onRequestClose={closePopover}
       >
-        <Pressable style={styles.backdrop} onPress={closePopover} />
-        <View style={popoverStyle} ref={popoverRef}>
+        {!solo && <Pressable style={styles.backdrop} onPress={closePopover} />}
+        <View onLayout={openPopover} style={popoverStyle} ref={popoverRef}>
           <Grow
             visible={open}
             onAnimationState={setInAnimation}
@@ -192,7 +220,7 @@ export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
             {position.directionY === "top" && arrowComponent}
           </Grow>
         </View>
-      </Modal>
+      </Container>
     );
   }
 );
@@ -201,7 +229,7 @@ Popover.displayName = "Popover";
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 50,
+    minHeight: 40,
     overflow: "hidden",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
