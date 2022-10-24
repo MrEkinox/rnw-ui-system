@@ -113,7 +113,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
     );
 
     return (
-      <View ref={ref}>
+      <View ref={ref} style={styles.container}>
         {children || (
           <TextField
             {...props}
@@ -122,7 +122,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
             color={color}
             value={currentText}
             onFocus={openPopover}
-            onBlur={closePopover}
+            //onBlur={closePopover}
             onChange={onChangeText}
           />
         )}
@@ -147,20 +147,8 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
 Autocomplete.displayName = "Autocomplete";
 
 const styles = StyleSheet.create({
-  list: { maxHeight: 200, maxWidth: 300, overflow: "scroll" },
-  icon: {
-    marginRight: 5,
+  container: {
     zIndex: +1,
   },
-  empty: {
-    padding: 15,
-  },
-  native: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    height: "100%",
-    width: "100%",
-    opacity: 0,
-  },
+  list: { maxHeight: 200, maxWidth: 300, overflow: "scroll" },
 });

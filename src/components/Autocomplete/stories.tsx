@@ -62,6 +62,10 @@ export const Solo = () => {
               { label: "Option 8", value: "option8" },
             ]}
           />
+          <Card style={{ width: 300, height: 50 }} variant="outlined"></Card>
+          <Card style={{ width: 300, height: 50 }} variant="outlined"></Card>
+          <Card style={{ width: 300, height: 50 }} variant="outlined"></Card>
+          <Card style={{ width: 300, height: 50 }} variant="outlined"></Card>
         </CardContent>
       </Card>
     </View>
