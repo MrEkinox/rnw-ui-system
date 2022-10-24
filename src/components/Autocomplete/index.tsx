@@ -108,8 +108,13 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
 
     const filteredItems = useMemo(
       () =>
-        currentItems?.filter(({ label: label2 }) =>
-          label2.toLowerCase().includes(currentText.toLowerCase())
+        currentItems?.filter(
+          ({ label: label2 }) =>
+            label2 !== currentText &&
+            label2
+              .toLowerCase()
+              .normalize("NFD")
+              .includes(currentText.toLowerCase().normalize("NFD"))
         ),
       [currentItems, currentText]
     );
