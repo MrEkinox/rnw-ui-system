@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { Autocomplete } from "./index";
 import { Card } from "../Card";
 import { CardContent } from "../Card/CardContent";
+import { Typography } from "../Typography";
 
 export default {
   component: Autocomplete,
@@ -32,6 +33,7 @@ export const Base = () => {
               { label: "Option 8", value: "option8" },
             ]}
           />
+          <Typography>Value: {value}</Typography>
         </CardContent>
       </Card>
       <View style={{ height: 200 }} />
@@ -62,10 +64,7 @@ export const Solo = () => {
               { label: "Option 8", value: "option8" },
             ]}
           />
-          <Card style={{ width: 300, height: 50 }} variant="outlined"></Card>
-          <Card style={{ width: 300, height: 50 }} variant="outlined"></Card>
-          <Card style={{ width: 300, height: 50 }} variant="outlined"></Card>
-          <Card style={{ width: 300, height: 50 }} variant="outlined"></Card>
+          <Typography>Value: {value}</Typography>
         </CardContent>
       </Card>
     </View>

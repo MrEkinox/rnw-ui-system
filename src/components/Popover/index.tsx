@@ -85,7 +85,6 @@ const getPosition = async (
     x = parentX + childWidth / 2 + parentWidth / 2;
     directionX = "flex-start";
   }
-  console.log({ x, y, directionY, directionX });
   return { x, y, directionY, directionX };
 };
 

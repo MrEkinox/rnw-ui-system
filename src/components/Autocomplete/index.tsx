@@ -4,7 +4,6 @@ import { useState } from "react";
 import { TextField } from "../TextField";
 import { Popover } from "../Popover";
 import { SelectFieldItem } from "../SelectField/SelectFieldItem";
-import { isMobile } from "../../utils";
 import { SelectFieldItemOptions, SelectFieldProps } from "../SelectField";
 import { useDebouncedCallback } from "use-debounce";
 
@@ -43,11 +42,10 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
     const [isFocused, setIsFocused] = useState(false);
 
     const currentItems = useMemo(() => {
-      let newItems: SelectFieldItemOptions[] = items;
-      if (clearable && clearText && !isMobile) {
-        newItems = [{ label: clearText || "", value: "clear" }, ...newItems];
+      if (clearable && clearText) {
+        return [{ label: clearText || "", value: "clear" }, ...items];
       }
-      return newItems;
+      return items;
     }, [items, clearable, clearText]);
 
     useEffect(() => {
@@ -72,6 +70,10 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
       setIsFocused(false);
     }, [solo, value]);
 
+    const onBlur = useCallback(() => {
+      setTimeout(closePopover, 100);
+    }, [closePopover]);
+
     const getLabel = useCallback(
       (currentValue: string) =>
         currentItems.find((item) => item.value === currentValue)?.label,
@@ -79,13 +81,13 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
     );
 
     const onSelect = useCallback(
-      (newValue: any) => {
+      (newValue: string) => {
         const valueLabel = getLabel(newValue);
         if (!valueLabel) return;
         onChange?.(valueLabel);
         closePopover();
       },
-      [closePopover, getLabel, onChange]
+      [getLabel, closePopover, onChange]
     );
 
     const renderOption: ListRenderItem<SelectFieldItemOptions> = useCallback(
@@ -122,7 +124,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
             color={color}
             value={currentText}
             onFocus={openPopover}
-            onBlur={closePopover}
+            onBlur={onBlur}
             onChange={onChangeText}
           />
         )}
