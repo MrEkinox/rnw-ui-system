@@ -10,7 +10,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 export type AutocompleteProps = {
   loading?: boolean;
-  onSearch?: () => void;
+  onSearch?: (value: string) => any;
   value?: string | null;
   solo?: boolean;
   delay?: number;
@@ -67,7 +67,10 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
 
     const openPopover = useCallback(() => setIsFocused(true), []);
 
-    const closePopover = useCallback(() => setIsFocused(false), []);
+    const closePopover = useCallback(() => {
+      if (!solo) setCurrentText(value || "");
+      setIsFocused(false);
+    }, [solo, value]);
 
     const getLabel = useCallback(
       (currentValue: string) =>

@@ -2,7 +2,7 @@ import React from "react";
 import { SelectFieldProps } from "../SelectField";
 export declare type AutocompleteProps = {
     loading?: boolean;
-    onSearch?: () => void;
+    onSearch?: (value: string) => any;
     value?: string | null;
     solo?: boolean;
     delay?: number;
