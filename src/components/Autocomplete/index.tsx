@@ -122,7 +122,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
             color={color}
             value={currentText}
             onFocus={openPopover}
-            //onBlur={closePopover}
+            onBlur={closePopover}
             onChange={onChangeText}
           />
         )}
