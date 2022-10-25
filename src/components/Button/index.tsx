@@ -169,6 +169,7 @@ export const Button = memo<React.PropsWithChildren<ButtonProps>>(
             color={iconProps.color}
             style={fontStyle}
             selectable={false}
+            align="center"
           >
             {children}
           </Typography>
