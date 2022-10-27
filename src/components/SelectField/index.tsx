@@ -202,6 +202,8 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
             key={index}
             selected={isSelected}
             color={color}
+            nativeID={item.nativeID}
+            disabled={item.disabled}
             value={item.value}
             onPress={onChangeValue}
           >

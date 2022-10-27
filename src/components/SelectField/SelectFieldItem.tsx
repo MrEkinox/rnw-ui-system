@@ -15,34 +15,50 @@ export interface SelectFieldItemProps extends Omit<PressableProps, "onPress"> {
 
 export const SelectFieldItem = memo<
   React.PropsWithChildren<SelectFieldItemProps>
->(({ children, value, onPress, color = "primary", selected, ...props }) => {
-  const hover = useHover();
+>(
+  ({
+    children,
+    disabled,
+    value,
+    onPress,
+    color = "primary",
+    selected,
+    ...props
+  }) => {
+    const hover = useHover();
 
-  const style = useThemeStyle(
-    (theme) => {
-      const selectedColor = ColorJS(theme.palette[color] || color)
-        .fade(0.8)
-        .toString();
-      return {
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        backgroundColor: selected ? selectedColor : undefined,
-        opacity: hover.isActive ? 0.5 : 1,
-      };
-    },
-    [color, selected, hover.isActive]
-  );
+    const style = useThemeStyle(
+      (theme) => {
+        const selectedColor = ColorJS(theme.palette[color] || color)
+          .fade(0.8)
+          .toString();
+        return {
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+          backgroundColor: selected ? selectedColor : undefined,
+          opacity: hover.isActive || disabled ? 0.5 : 1,
+        };
+      },
+      [color, selected, hover.isActive, disabled]
+    );
 
-  const onClick = useCallback(() => onPress?.(value), [onPress, value]);
+    const onClick = useCallback(() => onPress?.(value), [onPress, value]);
 
-  return (
-    <Pressable onPress={onClick} {...hover.handlers} {...props} style={style}>
-      {typeof children === "string" ? (
-        <Typography>{children}</Typography>
-      ) : (
-        children
-      )}
-    </Pressable>
-  );
-});
+    return (
+      <Pressable
+        disabled={disabled}
+        onPress={onClick}
+        {...hover.handlers}
+        {...props}
+        style={style}
+      >
+        {typeof children === "string" ? (
+          <Typography>{children}</Typography>
+        ) : (
+          children
+        )}
+      </Pressable>
+    );
+  }
+);
 SelectFieldItem.displayName = "SelectFieldItem";
