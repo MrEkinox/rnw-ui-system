@@ -76,7 +76,7 @@ export const NativeSelectField = memo<
     if (!isMobile) return <>{children}</>;
 
     return (
-      <label htmlFor={`select-${id}`}>
+      <label htmlFor={`select-${id}`} style={styles.nativeLabel}>
         <select
           disabled={disabled}
           id={`select-${id}`}
@@ -323,6 +323,9 @@ const styles = StyleSheet.create({
   },
   empty: {
     padding: 15,
+  },
+  nativeLabel: {
+    position: "relative",
   },
   native: {
     position: "absolute",

@@ -4,7 +4,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "lib": ["es2017", "dom"],
-    "module": "ESNext",
+    "module": "CommonJS",
     "target": "esnext",
     "noEmit": false,
     "strict": true,

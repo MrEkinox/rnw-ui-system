@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "",
   "scripts": {
-    "build": "rm -rf lib && tsc",
+    "build": "rm -rf lib && tsc -p tsconfig.prod.json",
     "lint": "tsc --noEmit && eslint '**/*.[jt]s?(x)' --fix",
     "coverage": "cypress run --component",
     "cypress": "cypress open --component",
