@@ -1,6 +1,13 @@
 import { useThemeStyle } from "../../hooks/useThemeStyle";
-import React, { memo, useMemo } from "react";
-import { StyleProp, Text, TextProps, View, ViewStyle } from "react-native";
+import React, { memo, useCallback, useMemo, useState } from "react";
+import {
+  LayoutChangeEvent,
+  StyleProp,
+  Text,
+  TextProps,
+  View,
+  ViewStyle,
+} from "react-native";
 import { Colors, useTheme } from "../../theme";
 
 export type TypographyVariant =
@@ -49,6 +56,7 @@ export const Typography = memo<React.PropsWithChildren<TypographyProps>>(
     const theme = useTheme();
     const variantStyle = variant && theme.typography[variant];
     const fontSize = variantStyle?.["fontSize"] || 1;
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
     const style = useThemeStyle(
       (curTheme) => {
@@ -98,19 +106,25 @@ export const Typography = memo<React.PropsWithChildren<TypographyProps>>(
       ]
     );
 
+    const onLayout = useCallback((event: LayoutChangeEvent) => {
+      const { width, height } = event.nativeEvent.layout;
+      setDimensions({ width, height });
+    }, []);
+
     const verticalStyle: StyleProp<ViewStyle> = useMemo(
       () => ({
         alignItems: "center",
-        width: fontSize,
-        height: "100%",
+        width: dimensions.height || fontSize,
+        height: dimensions.width || "100%",
       }),
-      [fontSize]
+      [dimensions.height, dimensions.width, fontSize]
     );
 
     if (vertical) {
       return (
         <View style={verticalStyle}>
           <Text
+            onLayout={onLayout}
             ellipsizeMode={noWrap ? "tail" : undefined}
             {...props}
             style={style}
