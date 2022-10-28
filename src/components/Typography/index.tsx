@@ -111,9 +111,10 @@ export const Typography = memo<React.PropsWithChildren<TypographyProps>>(
       setDimensions({ width, height });
     }, []);
 
-    const verticalStyle: StyleProp<ViewStyle> = useMemo(
-      () => ({
+    const verticalStyle = useMemo(
+      (): StyleProp<ViewStyle> => ({
         alignItems: "center",
+        justifyContent: "center",
         width: dimensions.height || fontSize,
         height: dimensions.width || "100%",
       }),
