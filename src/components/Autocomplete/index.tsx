@@ -49,7 +49,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
     }, [items, clearable, clearText]);
 
     useEffect(() => {
-      if (value) setCurrentText(value);
+      setCurrentText(value || "");
     }, [value]);
 
     const onChangeText = useCallback(

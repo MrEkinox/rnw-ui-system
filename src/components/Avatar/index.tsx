@@ -116,5 +116,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-  img: { width: "100%", height: "100%", position: "absolute" },
+  img: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    borderRadius: 0.1,
+  },
 });
