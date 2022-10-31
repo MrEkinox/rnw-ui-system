@@ -46,7 +46,7 @@ export const WithIcon = () => (
 
 export const Image = () => (
   <View style={{ padding: 50 }}>
-    <Avatar src="https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg">
+    <Avatar src="https://storage.googleapis.com/belle-gueule-dev.appspot.com/55905E73-94A4-43BF-A1C9-07BE6128EDB0.jpeg">
       Yannis Caussade
     </Avatar>
   </View>
