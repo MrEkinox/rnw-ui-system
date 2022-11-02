@@ -38,9 +38,9 @@ export const MaxDate = () => (
 
 export const Range = () => {
   const [startDate, setStartDate] = useState(
-    moment().subtract(2, "days").toDate()
+    moment().add(40, "days").toDate()
   );
-  const [endDate, setEndDate] = useState(moment().add(2, "days").toDate());
+  const [endDate, setEndDate] = useState(moment().add(42, "days").toDate());
 
   return (
     <View style={{ width: 500, padding: 50 }}>

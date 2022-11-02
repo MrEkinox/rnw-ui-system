@@ -113,6 +113,18 @@ export const Calendar = memo<CalendarProps>(
       }
     }, [maxDate, minDate, value]);
 
+    useEffect(() => {
+      if (mode === "single") return;
+      const newValue = value || NOW_DATE;
+      if (endDate && moment(newValue).isAfter(endDate)) {
+        setDisplayedDate(endDate);
+      } else if (startDate && moment(newValue).isBefore(startDate)) {
+        setDisplayedDate(startDate);
+      } else {
+        setDisplayedDate(newValue);
+      }
+    }, [endDate, mode, startDate, value]);
+
     const toggleView = useCallback(
       (newViewMode: typeof viewMode) => {
         setViewMode(viewMode === newViewMode ? "days" : newViewMode);
