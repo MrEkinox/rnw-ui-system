@@ -30,24 +30,6 @@ export const Base = () => {
   );
 };
 
-export const WithoutParent = () => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <View style={{ padding: 20, height: "400vh" }}>
-      <View style={{ height: "90vh" }} />
-      <View>
-        <Button onPress={() => setOpen(true)} fullWidth>
-          Open Popover
-        </Button>
-        <Popover open={open} onClose={() => setOpen(false)}>
-          <Typography variant="h6">Je suis une popover</Typography>
-        </Popover>
-      </View>
-    </View>
-  );
-};
-
 export const Slider = () => {
   const [open, setOpen] = useState(false);
   const ref = useRef<View>(null);

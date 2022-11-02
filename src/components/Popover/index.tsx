@@ -1,5 +1,12 @@
 import { Grow, GrowProps } from "../Grow";
-import React, { memo, useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   Dimensions,
   FlexAlignType,
@@ -7,6 +14,7 @@ import {
   Pressable,
   StyleProp,
   StyleSheet,
+  useWindowDimensions,
   View,
   ViewStyle,
 } from "react-native";
@@ -107,6 +115,7 @@ export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
     const theme = useTheme();
     const popoverRef = useRef<View>(null);
     const { setScrollLocked } = useScrollLock();
+    const { width, height } = useWindowDimensions();
     const [position, setPosition] = useState({
       x: 0,
       y: 0,
@@ -118,10 +127,15 @@ export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
     const borderRadius = theme.borderRadius;
 
     const openPopover = useCallback(async () => {
+      if (!open) return;
       const newPosition = await getPosition(parentRef, popoverRef, solo);
       setScrollLocked(true);
       setPosition(newPosition);
-    }, [parentRef, setScrollLocked, solo]);
+    }, [open, parentRef, setScrollLocked, solo]);
+
+    useEffect(() => {
+      openPopover();
+    }, [width, height, openPopover]);
 
     const dynamicArrowPosition = arrowPosition || position.directionX;
 
@@ -195,6 +209,7 @@ export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
         visible
         onDismiss={closePopover}
         transparent
+        onShow={openPopover}
         onRequestClose={closePopover}
       >
         {!solo && <Pressable style={styles.backdrop} onPress={closePopover} />}
