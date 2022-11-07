@@ -1,4 +1,5 @@
-import moment from "moment";
+import dayjs from "dayjs";
+import isBetweenDayJs from "dayjs/plugin/isBetween";
 import React, {
   createContext,
   memo,
@@ -20,6 +21,8 @@ import { Button } from "../Button";
 import { CalendarDayView } from "./CalendarDay";
 import { CalendarYearView } from "./CalendarYearView";
 import { CalendarMonthSelector } from "./CalendarMonthSelector";
+
+dayjs.extend(isBetweenDayJs);
 
 export type CalendarViewType = "days" | "years" | "months";
 
@@ -53,8 +56,8 @@ interface ContextProps {
 const CalendarContext = createContext<ContextProps>({
   color: "primary",
   displayedDate: new Date(),
-  maxDate: moment().add("100", "years").toDate(),
-  minDate: moment().subtract("100", "years").toDate(),
+  maxDate: dayjs().add(100, "years").toDate(),
+  minDate: dayjs().subtract(100, "years").toDate(),
   onSelect: () => {},
   toggleView: () => {},
   getDateInfo: () => ({}),
@@ -79,8 +82,8 @@ export interface CalendarProps extends ViewProps {
   color?: Colors;
 }
 
-const MIN_DATE = moment().subtract(100, "years").toDate();
-const MAX_DATE = moment().add(100, "years").toDate();
+const MIN_DATE = dayjs().subtract(100, "years").toDate();
+const MAX_DATE = dayjs().add(100, "years").toDate();
 const NOW_DATE = new Date();
 
 export const Calendar = memo<CalendarProps>(
@@ -104,9 +107,9 @@ export const Calendar = memo<CalendarProps>(
 
     useEffect(() => {
       const newValue = value || NOW_DATE;
-      if (maxDate && moment(newValue).isAfter(maxDate)) {
+      if (maxDate && dayjs(newValue).isAfter(maxDate)) {
         setDisplayedDate(maxDate);
-      } else if (minDate && moment(newValue).isBefore(minDate)) {
+      } else if (minDate && dayjs(newValue).isBefore(minDate)) {
         setDisplayedDate(minDate);
       } else {
         setDisplayedDate(newValue);
@@ -116,9 +119,9 @@ export const Calendar = memo<CalendarProps>(
     useEffect(() => {
       if (mode === "single") return;
       const newValue = value || NOW_DATE;
-      if (endDate && moment(newValue).isAfter(endDate)) {
+      if (endDate && dayjs(newValue).isAfter(endDate)) {
         setDisplayedDate(endDate);
-      } else if (startDate && moment(newValue).isBefore(startDate)) {
+      } else if (startDate && dayjs(newValue).isBefore(startDate)) {
         setDisplayedDate(startDate);
       } else {
         setDisplayedDate(newValue);
@@ -153,10 +156,10 @@ export const Calendar = memo<CalendarProps>(
         if (mode === "range") {
           let newStartValue = newDate;
           let newEndValue = newDate;
-          if (!startDate || !moment(startDate).isSame(endDate, "day")) {
+          if (!startDate || !dayjs(startDate).isSame(endDate, "day")) {
             newStartValue = newDate;
             newEndValue = newDate;
-          } else if (moment(newDate).isBefore(startDate)) {
+          } else if (dayjs(newDate).isBefore(startDate)) {
             newStartValue = newDate;
             newEndValue = startDate;
           } else {
@@ -164,8 +167,8 @@ export const Calendar = memo<CalendarProps>(
             newEndValue = newDate;
           }
           onRangeChange?.(
-            moment(newStartValue).set("hours", 9).toDate(),
-            moment(newEndValue).set("hours", 19).toDate()
+            dayjs(newStartValue).set("hours", 9).toDate(),
+            dayjs(newEndValue).set("hours", 19).toDate()
           );
         } else if (mode === "single") {
           onSingleChange?.(newDate);
@@ -176,7 +179,7 @@ export const Calendar = memo<CalendarProps>(
 
     const getDateInfo = useCallback(
       (curValue: Date, type: CalendarViewType) => {
-        const parsedValue = moment(curValue);
+        const parsedValue = dayjs(curValue);
         const isSame = mode !== "range" && parsedValue.isSame(value, type);
         const isFirst = !!startDate && parsedValue.isSame(startDate, type);
         const isLast = endDate ? parsedValue.isSame(endDate, type) : isFirst;
@@ -253,7 +256,7 @@ export const Calendar = memo<CalendarProps>(
               color={themeColor}
               style={styles.btn}
             >
-              {moment(displayedDate).format("YYYY")}
+              {dayjs(displayedDate).format("YYYY")}
             </Button>
           </View>
           {viewMode === "days" && <CalendarDayView />}

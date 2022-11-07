@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import React, { memo } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { useCalendar } from ".";
@@ -7,9 +7,9 @@ import { CalendarButton } from "./CalendarButton";
 export const CalendarYearView = memo(() => {
   const { value, minDate, maxDate } = useCalendar();
 
-  const yearNumber = moment(maxDate).diff(minDate, "years");
+  const yearNumber = dayjs(maxDate).diff(minDate, "years");
   const years = Array.from({ length: yearNumber || 1 }).map((_, yearIndex) =>
-    moment(value).set("years", (minDate?.getFullYear() || 0) + yearIndex)
+    dayjs(value).set("years", (minDate?.getFullYear() || 0) + yearIndex)
   );
 
   return (

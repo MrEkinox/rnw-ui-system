@@ -1,5 +1,5 @@
 import { Typography } from "../Typography";
-import moment from "moment";
+import dayjs from "dayjs";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Card } from "../Card";
@@ -28,8 +28,8 @@ export const MaxDate = () => (
         <Calendar
           interactive
           onSingleChange={() => {}}
-          maxDate={moment().add(2, "days").toDate()}
-          minDate={moment().subtract(2, "days").toDate()}
+          maxDate={dayjs().add(2, "days").toDate()}
+          minDate={dayjs().subtract(2, "days").toDate()}
         />
       </CardContent>
     </Card>
@@ -38,16 +38,16 @@ export const MaxDate = () => (
 
 export const Range = () => {
   const [startDate, setStartDate] = useState(
-    moment().add(40, "days").toDate()
+    dayjs().add(40, "days").toDate()
   );
-  const [endDate, setEndDate] = useState(moment().add(42, "days").toDate());
+  const [endDate, setEndDate] = useState(dayjs().add(42, "days").toDate());
 
   return (
     <View style={{ width: 500, padding: 50 }}>
       <Card>
         <CardContent>
-          <Typography>Start : {moment(startDate).format("LLLL")}</Typography>
-          <Typography>End : {moment(endDate).format("LLLL")}</Typography>
+          <Typography>Start : {dayjs(startDate).format("LLLL")}</Typography>
+          <Typography>End : {dayjs(endDate).format("LLLL")}</Typography>
           <Calendar
             interactive
             mode="range"

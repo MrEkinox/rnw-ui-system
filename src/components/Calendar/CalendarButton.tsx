@@ -1,7 +1,7 @@
 import { Button } from "../Button";
 import { Typography } from "../Typography";
 import { useTheme } from "../../theme";
-import moment from "moment";
+import dayjs from "dayjs";
 import React, { memo, useCallback, useMemo } from "react";
 import ColorJS from "color";
 import { StyleProp, ViewStyle, View, StyleSheet } from "react-native";
@@ -67,7 +67,7 @@ export const CalendarButton = memo<CalendarButtonProps>(({ value, type }) => {
         color={color}
       >
         <Typography color={fontColor} style={textStyle}>
-          {moment(value).format(format)}
+          {dayjs(value).format(format)}
         </Typography>
       </Button>
     </View>

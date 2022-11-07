@@ -1,6 +1,6 @@
 import { IconButton } from "../IconButton";
 import { Typography } from "../Typography";
-import moment from "moment";
+import dayjs from "dayjs";
 import React, { memo, useCallback } from "react";
 import { View, StyleSheet } from "react-native";
 import { Icon } from "../Icon";
@@ -10,14 +10,14 @@ export const CalendarMonthSelector = memo(() => {
   const { displayedDate, onChangeMonth, color } = useCalendar();
 
   const onNextMonth = useCallback(() => {
-    onChangeMonth(moment(displayedDate).add(1, "months").toDate());
+    onChangeMonth(dayjs(displayedDate).add(1, "months").toDate());
   }, [displayedDate, onChangeMonth]);
 
   const onPreviousMonth = useCallback(() => {
-    onChangeMonth(moment(displayedDate).subtract(1, "months").toDate());
+    onChangeMonth(dayjs(displayedDate).subtract(1, "months").toDate());
   }, [displayedDate, onChangeMonth]);
 
-  const text = moment(displayedDate).format("MMMM");
+  const text = dayjs(displayedDate).format("MMMM");
 
   return (
     <View style={styles.container}>

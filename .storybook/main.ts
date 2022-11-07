@@ -5,7 +5,7 @@ const config: StorybookConfig = {
   typescript: { check: false, reactDocgen: false },
   stories: ["../**/*stories.@(js|jsx|ts|tsx)"],
   framework: "@storybook/react",
-  addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
+  addons: ["@storybook/addon-essentials"],
   webpackFinal: (config) => {
     config.module?.rules?.push({
       test: /\.(ts|tsx)$/,

@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { useState } from "react";
 import { TextField, TextFieldProps } from "../TextField";
 import { Icon } from "../Icon";
-import moment from "moment";
+import dayjs from "dayjs";
 import { Calendar } from "../Calendar";
 import { Popover } from "../Popover";
 import { Button } from "../Button";
@@ -23,13 +23,13 @@ export const NativeDateField = memo<React.PropsWithChildren<DateFieldProps>>(
     const theme = useTheme();
     const themeColor = theme.palette[color] || color;
 
-    const valueText = moment(value).format("YYYY-MM-DD");
-    const minText = minDate ? moment(minDate).format("YYYY-MM-DD") : undefined;
-    const maxText = maxDate ? moment(maxDate).format("YYYY-MM-DD") : undefined;
+    const valueText = dayjs(value).format("YYYY-MM-DD");
+    const minText = minDate ? dayjs(minDate).format("YYYY-MM-DD") : undefined;
+    const maxText = maxDate ? dayjs(maxDate).format("YYYY-MM-DD") : undefined;
 
     const onChangeValue = useCallback(
       (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = moment(event.target.value).toDate();
+        const newValue = dayjs(event.target.value).toDate();
         onChange?.(newValue);
       },
       [onChange]
@@ -71,7 +71,7 @@ export const DateField = memo<DateFieldProps>(
     const [currentText, setText] = useState("");
 
     useEffect(() => {
-      if (value) setText(moment(value).format(format));
+      if (value) setText(dayjs(value).format(format));
     }, [value, format]);
 
     const openPopover = useCallback(() => setIsOpen(true), []);
@@ -85,7 +85,7 @@ export const DateField = memo<DateFieldProps>(
           format.indexOf("/", newText.length) === newText.length;
         const newCurrentText = `${newText}${needSlash ? "/" : ""}`;
 
-        const parsedDate = moment(newText, format);
+        const parsedDate = dayjs(newText, format);
 
         if (newCurrentText.length === format.length && parsedDate.isValid())
           onChange?.(parsedDate.toDate());

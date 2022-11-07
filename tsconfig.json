@@ -5,7 +5,7 @@
     "jsx": "react-jsx",
     "lib": ["es2017", "dom"],
     "module": "CommonJS",
-    "target": "esnext",
+    "target": "ES6",
     "noEmit": false,
     "strict": true,
     "baseUrl": ".",

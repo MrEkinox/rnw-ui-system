@@ -1,5 +1,5 @@
 import { useTheme } from "../../theme";
-import { Moment } from "moment";
+import dayjs, { Dayjs } from "dayjs";
 import React, { memo, useCallback, useMemo } from "react";
 import {
   StyleProp,
@@ -12,10 +12,9 @@ import ColorJS from "color";
 import { useCalendar } from ".";
 import { IconButton } from "../IconButton";
 import { Typography } from "../Typography";
-import moment from "moment";
 
 export interface CalendarDayProps extends ViewProps {
-  date: Moment;
+  date: Dayjs;
 }
 
 export const CalendarDay = memo<CalendarDayProps>(({ date, ...props }) => {
@@ -74,15 +73,15 @@ export const CalendarDayView = memo(() => {
   const { displayedDate, color } = useCalendar();
 
   const daysByWeeks = useMemo(() => {
-    const daysInMonth = moment(displayedDate).daysInMonth();
-    const firstDay = moment(displayedDate).set("date", 0);
-    const firstDayNumber = firstDay.get("E");
+    const daysInMonth = dayjs(displayedDate).daysInMonth();
+    const firstDay = dayjs(displayedDate).set("date", 0);
+    const firstDayNumber = firstDay.day();
     const weekInMonth = daysInMonth / 7 + (firstDayNumber > 4 ? 2 : 1);
 
     return Array.from({ length: weekInMonth }).map((_, weekIndex) => {
       return Array.from({ length: 7 }).map((_2, dayIndex) => {
         const dayNumber = 7 * weekIndex + dayIndex + 1;
-        return moment(displayedDate).set("date", dayNumber - firstDayNumber);
+        return dayjs(displayedDate).set("date", dayNumber - firstDayNumber);
       });
     });
   }, [displayedDate]);

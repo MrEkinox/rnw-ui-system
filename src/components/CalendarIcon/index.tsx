@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Colors, useTheme } from "../../theme";
 import ColorJS from "color";
-import moment from "moment";
+import dayjs from "dayjs";
 import { Typography } from "../Typography";
 
 export interface CalendarIconProps extends ViewProps {
@@ -39,7 +39,7 @@ export const CalendarIcon = memo<CalendarIconProps>(
 
     const circularPadding = variant === "circular" ? size / 10 : 1;
 
-    const momentDate = moment(date);
+    const momentDate = dayjs(date);
 
     const calendarStyle = useMemo((): StyleProp<ViewStyle> => {
       const borderRadius = theme.borderRadius / 1.5;
