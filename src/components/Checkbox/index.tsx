@@ -98,7 +98,7 @@ export const Checkbox = memo<CheckboxProps>(
 Checkbox.displayName = "Checkbox";
 
 const styles = StyleSheet.create({
-  flex: { flexDirection: "row", alignItems: "center", flexWrap: "wrap" },
+  flex: { flexDirection: "row", alignItems: "center", flexWrap: "nowrap" },
   label: { marginLeft: 10 },
   container: {
     justifyContent: "center",

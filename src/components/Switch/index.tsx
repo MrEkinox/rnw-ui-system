@@ -126,6 +126,6 @@ export const Switch = memo(
 Switch.displayName = "Switch";
 
 const styles = StyleSheet.create({
-  flex: { flexDirection: "row", alignItems: "center", flexWrap: "wrap" },
+  flex: { flexDirection: "row", alignItems: "center", flexWrap: "nowrap" },
   label: { marginLeft: 10 },
 });
