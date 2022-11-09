@@ -74,20 +74,12 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
       setTimeout(closePopover, 100);
     }, [closePopover]);
 
-    const getLabel = useCallback(
-      (currentValue: string) =>
-        currentItems.find((item) => item.value === currentValue)?.label,
-      [currentItems]
-    );
-
     const onSelect = useCallback(
       (newValue: string) => {
-        const valueLabel = getLabel(newValue);
-        if (!valueLabel) return;
-        onChange?.(valueLabel);
+        onChange?.(newValue);
         closePopover();
       },
-      [getLabel, closePopover, onChange]
+      [closePopover, onChange]
     );
 
     const renderOption: ListRenderItem<SelectFieldItemOptions> = useCallback(
