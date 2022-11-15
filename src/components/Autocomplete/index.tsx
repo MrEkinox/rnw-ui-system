@@ -6,12 +6,14 @@ import { Popover } from "../Popover";
 import { SelectFieldItem } from "../SelectField/SelectFieldItem";
 import { SelectFieldItemOptions, SelectFieldProps } from "../SelectField";
 import { useDebouncedCallback } from "use-debounce";
+import { Card } from "../Card";
 
 export type AutocompleteProps = {
   loading?: boolean;
   onSearch?: (value: string) => any;
   value?: string | null;
   solo?: boolean;
+  solid?: boolean;
   delay?: number;
   onChange?: (newValue: string) => void;
 } & Omit<SelectFieldProps, "multiple" | "value" | "onChange" | "searchable">;
@@ -26,6 +28,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
     solo,
     delay = 500,
     items,
+    solid,
     onChange,
     onSearch,
     renderItem,
@@ -111,6 +114,16 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
       [currentItems, currentText]
     );
 
+    const content = (
+      <FlatList
+        data={filteredItems}
+        removeClippedSubviews
+        renderItem={renderOption}
+        style={styles.list}
+        {...flatListProps}
+      />
+    );
+
     return (
       <View ref={ref} style={styles.container}>
         {children || (
@@ -122,22 +135,26 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
             value={currentText}
             onFocus={openPopover}
             onBlur={onBlur}
+            containerStyle={
+              solid && !!filteredItems.length && styles.noBorderInput
+            }
             onChange={onChangeText}
           />
         )}
-        <Popover
-          solo
-          parentRef={ref}
-          open={isFocused && !!filteredItems.length}
-        >
-          <FlatList
-            data={filteredItems}
-            removeClippedSubviews
-            renderItem={renderOption}
-            style={styles.list}
-            {...flatListProps}
-          />
-        </Popover>
+        {solid && !!filteredItems.length && (
+          <Card variant="outlined" style={styles.card}>
+            {content}
+          </Card>
+        )}
+        {!solid && (
+          <Popover
+            solo
+            parentRef={ref}
+            open={isFocused && !!filteredItems.length}
+          >
+            {content}
+          </Popover>
+        )}
       </View>
     );
   }
@@ -148,6 +165,15 @@ Autocomplete.displayName = "Autocomplete";
 const styles = StyleSheet.create({
   container: {
     zIndex: +1,
+  },
+  card: {
+    borderTopWidth: 0,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
+  noBorderInput: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   list: { maxHeight: 200, maxWidth: 300, overflow: "scroll" },
 });

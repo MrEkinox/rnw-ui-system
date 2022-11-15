@@ -1,6 +1,7 @@
 import { IconProps } from "../components/Icon";
 import React from "react";
 import { DeviceInfo } from "react-native-web";
+import { StyleProp, ViewStyle } from "react-native";
 
 export const renderIcon = (
   icon: React.ReactNode,
@@ -25,3 +26,12 @@ export const isMobile = !!(
   DeviceInfo.userAgent.match(/BlackBerry/i) ||
   DeviceInfo.userAgent.match(/Windows Phone/i)
 );
+
+export const computeBorderRadius = (size: number): StyleProp<ViewStyle> => {
+  return {
+    borderBottomLeftRadius: size,
+    borderBottomRightRadius: size,
+    borderTopLeftRadius: size,
+    borderTopRightRadius: size,
+  };
+};

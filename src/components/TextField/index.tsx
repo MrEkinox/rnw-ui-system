@@ -17,7 +17,7 @@ import { useTheme, Colors } from "../../theme";
 import { useState } from "react";
 import { Typography, TypographyProps } from "../Typography";
 import ColorJS from "color";
-import { renderIcon } from "../../utils";
+import { computeBorderRadius, renderIcon } from "../../utils";
 import { useThemeStyle } from "../../hooks/useThemeStyle";
 
 export interface TextFieldHelperProps extends TypographyProps {
@@ -214,10 +214,8 @@ export const TextField = memo<TextFieldProps>(
     const style = useThemeStyle(
       (curTheme) => [
         styles.container,
-        {
-          borderRadius: curTheme.borderRadius / 1.5,
-          borderColor: currentColor,
-        },
+        computeBorderRadius(curTheme.borderRadius / 1.5),
+        { borderColor: currentColor },
         containerStyle,
       ],
       [containerStyle, currentColor]

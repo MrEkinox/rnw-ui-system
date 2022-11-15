@@ -1,5 +1,6 @@
 import React, { memo, useMemo } from "react";
 import { StyleProp, View, ViewProps, ViewStyle } from "react-native";
+import { computeBorderRadius } from "../../utils";
 import { Colors, useTheme } from "../../theme";
 
 export interface CardProps extends ViewProps {
@@ -28,7 +29,10 @@ export const Card = memo<React.PropsWithChildren<CardProps>>(
     const outlinedStyle = useMemo((): StyleProp<ViewStyle> => {
       return {
         borderColor: themeColor,
-        borderWidth: 2,
+        borderTopWidth: 2,
+        borderLeftWidth: 2,
+        borderRightWidth: 2,
+        borderBottomWidth: 2,
         borderStyle: "solid",
       };
     }, [themeColor]);
@@ -49,7 +53,12 @@ export const Card = memo<React.PropsWithChildren<CardProps>>(
     }, [elevationStyle, variant, outlinedStyle]);
 
     const containerStyle: StyleProp<ViewStyle> = useMemo(
-      () => [{ borderRadius, backgroundColor }, cardStyle, style],
+      () => [
+        computeBorderRadius(borderRadius),
+        { backgroundColor },
+        cardStyle,
+        style,
+      ],
       [backgroundColor, borderRadius, cardStyle, style]
     );
 

@@ -5,6 +5,7 @@ export declare type AutocompleteProps = {
     onSearch?: (value: string) => any;
     value?: string | null;
     solo?: boolean;
+    solid?: boolean;
     delay?: number;
     onChange?: (newValue: string) => void;
 } & Omit<SelectFieldProps, "multiple" | "value" | "onChange" | "searchable">;

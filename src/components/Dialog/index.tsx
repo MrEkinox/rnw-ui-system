@@ -70,7 +70,7 @@ export const Dialog = memo<React.PropsWithChildren<DialogProps>>(
     const cardStyle = useMemo(
       () => [
         styles.card,
-        !!width && { maxWidth: width },
+        !!width && { width },
         { transform: [{ scale: animation }] },
         style,
       ],
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
   },
   scroll: {
-    maxHeight: "90vh",
+    maxHeight: "80vh",
   },
   dialog: { alignItems: "center", justifyContent: "center", flex: 1 },
   backdrop: { width: "100%", height: "100%" },
