@@ -44,13 +44,6 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
     const ref = useRef<View>(null);
     const [isFocused, setIsFocused] = useState(false);
 
-    const currentItems = useMemo(() => {
-      if (clearable && clearText) {
-        return [{ label: clearText || "", value: "clear" }, ...items];
-      }
-      return items;
-    }, [items, clearable, clearText]);
-
     useEffect(() => {
       setCurrentText(value || "");
     }, [value]);
@@ -103,7 +96,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
 
     const filteredItems = useMemo(
       () =>
-        currentItems?.filter(
+        items?.filter(
           ({ label: label2 }) =>
             label2 !== currentText &&
             label2
@@ -111,12 +104,19 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
               .normalize("NFD")
               .includes(currentText.toLowerCase().normalize("NFD"))
         ),
-      [currentItems, currentText]
+      [items, currentText]
     );
+
+    const currentItems = useMemo(() => {
+      if (clearable && clearText) {
+        return [{ label: clearText || "", value: "" }, ...filteredItems];
+      }
+      return filteredItems;
+    }, [filteredItems, clearable, clearText]);
 
     const content = (
       <FlatList
-        data={filteredItems}
+        data={currentItems}
         removeClippedSubviews
         renderItem={renderOption}
         style={styles.list}
