@@ -69,12 +69,13 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
 
     const closePopover = useCallback(() => setIsFocused(false), []);
 
+    const onBlur = useCallback(() => {
+      setTimeout(closePopover, 200);
+    }, [closePopover]);
+
     const onSelect = useCallback(
-      (newValue: string) => {
-        onChange?.(newValue);
-        closePopover();
-      },
-      [onChange, closePopover]
+      (newValue: string) => onChange?.(newValue),
+      [onChange]
     );
 
     const renderOption: ListRenderItem<SelectFieldItemOptions> = useCallback(
@@ -133,7 +134,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
             color={color}
             value={currentText}
             onFocus={openPopover}
-            onBlur={closePopover}
+            onBlur={onBlur}
             containerStyle={
               solid && !!filteredItems.length && styles.noBorderInput
             }
