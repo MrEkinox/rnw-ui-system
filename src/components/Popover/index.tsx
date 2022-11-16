@@ -129,20 +129,18 @@ export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
     const openPopover = useCallback(async () => {
       if (!open) return;
       const newPosition = await getPosition(parentRef, popoverRef, solo);
-      setScrollLocked(true);
       setPosition(newPosition);
-    }, [open, parentRef, setScrollLocked, solo]);
+    }, [open, parentRef, solo]);
 
     useEffect(() => {
       openPopover();
     }, [width, height, openPopover]);
 
-    const dynamicArrowPosition = arrowPosition || position.directionX;
+    useEffect(() => {
+      setScrollLocked(open || false);
+    }, [open, setScrollLocked]);
 
-    const closePopover = useCallback(() => {
-      setScrollLocked(false);
-      onClose?.();
-    }, [onClose, setScrollLocked]);
+    const dynamicArrowPosition = arrowPosition || position.directionX;
 
     const arrowStyle: StyleProp<ViewStyle> = useMemo(
       () => ({
@@ -207,12 +205,12 @@ export const Popover = memo<React.PropsWithChildren<PopoverProps>>(
       <Container
         nativeID="popover"
         visible
-        onDismiss={closePopover}
+        onDismiss={onClose}
         transparent
         onShow={openPopover}
-        onRequestClose={closePopover}
+        onRequestClose={onClose}
       >
-        {!solo && <Pressable style={styles.backdrop} onPress={closePopover} />}
+        {!solo && <Pressable style={styles.backdrop} onPress={onClose} />}
         <View onLayout={openPopover} style={popoverStyle} ref={popoverRef}>
           <Grow
             visible={open}
