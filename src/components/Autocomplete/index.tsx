@@ -48,6 +48,12 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
       setCurrentText(value || "");
     }, [value]);
 
+    useEffect(() => {
+      if (!isFocused && !solo) {
+        setCurrentText(value || "");
+      }
+    }, [isFocused, solo, value]);
+
     const onChangeText = useCallback(
       (newText: string) => {
         if (solo) {
@@ -61,21 +67,14 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
 
     const openPopover = useCallback(() => setIsFocused(true), []);
 
-    const closePopover = useCallback(() => {
-      if (!solo) setCurrentText(value || "");
-      setIsFocused(false);
-    }, [solo, value]);
-
-    const onBlur = useCallback(() => {
-      setTimeout(closePopover, 100);
-    }, [closePopover]);
+    const closePopover = useCallback(() => setIsFocused(false), []);
 
     const onSelect = useCallback(
       (newValue: string) => {
         onChange?.(newValue);
         closePopover();
       },
-      [closePopover, onChange]
+      [onChange, closePopover]
     );
 
     const renderOption: ListRenderItem<SelectFieldItemOptions> = useCallback(
@@ -134,7 +133,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
             color={color}
             value={currentText}
             onFocus={openPopover}
-            onBlur={onBlur}
+            onBlur={closePopover}
             containerStyle={
               solid && !!filteredItems.length && styles.noBorderInput
             }
