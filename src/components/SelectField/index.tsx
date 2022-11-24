@@ -122,6 +122,7 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
     clearText,
     clearable,
     children,
+    style,
     onTouchStart,
     onTouchEnd,
     onHoverIn,
@@ -283,7 +284,7 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
         <Pressable
           disabled={disabled || isMobile}
           ref={ref}
-          style={props.style}
+          style={style}
           onPress={openPopover}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
