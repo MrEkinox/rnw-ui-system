@@ -29,6 +29,8 @@ export interface SelectFieldItemOptions {
 export type SelectFieldProps<T = any> = {
   value: T;
   onChange?: (newValue?: T) => void;
+  onHoverIn?: () => void;
+  onHoverOut?: () => void;
   multiple?: boolean;
   flatListProps?: Omit<FlatListProps<any>, "data">;
   searchable?: boolean;
@@ -120,6 +122,10 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
     clearText,
     clearable,
     children,
+    onTouchStart,
+    onTouchEnd,
+    onHoverIn,
+    onHoverOut,
     ...props
   }) => {
     const theme = useTheme();
@@ -279,6 +285,10 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
           ref={ref}
           style={props.style}
           onPress={openPopover}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          onHoverIn={onHoverIn}
+          onHoverOut={onHoverOut}
         >
           {children || (
             <TextField

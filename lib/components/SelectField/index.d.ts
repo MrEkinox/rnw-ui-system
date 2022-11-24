@@ -10,6 +10,8 @@ export interface SelectFieldItemOptions {
 export declare type SelectFieldProps<T = any> = {
     value: T;
     onChange?: (newValue?: T) => void;
+    onHoverIn?: () => void;
+    onHoverOut?: () => void;
     multiple?: boolean;
     flatListProps?: Omit<FlatListProps<any>, "data">;
     searchable?: boolean;
