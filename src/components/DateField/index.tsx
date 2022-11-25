@@ -9,6 +9,8 @@ import { Popover } from "../Popover";
 import { Button } from "../Button";
 import { isMobile } from "../../utils";
 import { useTheme } from "../../theme";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
 
 export type DateFieldProps = Omit<TextFieldProps, "value" | "onChange"> & {
   value?: Date | null;
@@ -87,9 +89,10 @@ export const DateField = memo<DateFieldProps>(
 
         const parsedDate = dayjs(newText, format);
 
-        if (newCurrentText.length === format.length && parsedDate.isValid())
+        if (newCurrentText.length === format.length && parsedDate.isValid()) {
+          console.log(newText, parsedDate.toDate());
           onChange?.(parsedDate.toDate());
-        else onChange?.(undefined);
+        } else onChange?.(undefined);
 
         setText(newCurrentText);
       },

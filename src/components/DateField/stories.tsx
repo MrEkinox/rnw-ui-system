@@ -10,7 +10,7 @@ export default {
 };
 
 export const Base = () => {
-  const [value, setValue] = useState<Date | undefined>(new Date());
+  const [value, setValue] = useState<Date | undefined>(new Date("2019-03-11"));
 
   return (
     <View style={{ padding: 50 }}>
