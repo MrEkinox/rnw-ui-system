@@ -193,10 +193,11 @@ export interface ThemeProviderProps {
   mode?: "light" | "dark" | "auto";
   theme?: ThemeOptions;
   style?: StyleProp<ViewStyle>;
+  snackbar?: boolean;
 }
 
 export const ThemeProvider = memo<React.PropsWithChildren<ThemeProviderProps>>(
-  ({ children, mode = "auto", theme, ...props }) => {
+  ({ children, mode = "auto", snackbar = true, theme, ...props }) => {
     const deviceThemeMode = useColorScheme();
 
     const combinedTheme: any = useMemo(() => {
@@ -223,9 +224,13 @@ export const ThemeProvider = memo<React.PropsWithChildren<ThemeProviderProps>>(
 
     return (
       <ThemeContext.Provider value={combinedTheme}>
-        <SnackbarProvider>
+        {snackbar ? (
+          <SnackbarProvider>
+            <View style={style}>{children}</View>
+          </SnackbarProvider>
+        ) : (
           <View style={style}>{children}</View>
-        </SnackbarProvider>
+        )}
       </ThemeContext.Provider>
     );
   }

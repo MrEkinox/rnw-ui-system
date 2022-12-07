@@ -55,6 +55,7 @@ export interface ThemeProviderProps {
     mode?: "light" | "dark" | "auto";
     theme?: ThemeOptions;
     style?: StyleProp<ViewStyle>;
+    snackbar?: boolean;
 }
 export declare const ThemeProvider: React.NamedExoticComponent<React.PropsWithChildren<ThemeProviderProps>>;
 export {};
