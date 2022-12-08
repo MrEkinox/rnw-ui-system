@@ -34,7 +34,7 @@ export const ListItemText = memo<ListItemTextProps>(
           <Typography
             variant={primaryVariant}
             noWrap={noWrap}
-            gutterBottom
+            gutterBottom={!!secondary}
             {...primaryProps}
           >
             {primary}
