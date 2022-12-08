@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   scroll: {
-    maxHeight: 200,
+    maxHeight: 250,
     marginTop: 5,
   },
 });
