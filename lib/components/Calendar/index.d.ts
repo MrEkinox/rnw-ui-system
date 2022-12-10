@@ -1,5 +1,5 @@
 import React from "react";
-import { ViewProps } from "react-native";
+import { StyleProp, ViewProps, ViewStyle } from "react-native";
 import { Colors } from "../../theme";
 export declare type CalendarViewType = "days" | "years" | "months";
 interface ContextProps {
@@ -38,6 +38,7 @@ export interface CalendarProps extends ViewProps {
     onSingleChange?: (newValue?: Date) => void;
     onRangeChange?: (newStartValue: Date, newEndValue: Date) => void;
     color?: Colors;
+    headerStyle?: StyleProp<ViewStyle>;
 }
 export declare const Calendar: React.NamedExoticComponent<CalendarProps>;
 export {};

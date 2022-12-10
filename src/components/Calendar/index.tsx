@@ -80,6 +80,7 @@ export interface CalendarProps extends ViewProps {
   onSingleChange?: (newValue?: Date) => void;
   onRangeChange?: (newStartValue: Date, newEndValue: Date) => void;
   color?: Colors;
+  headerStyle?: StyleProp<ViewStyle>;
 }
 
 const MIN_DATE = dayjs().subtract(100, "years").toDate();
@@ -94,6 +95,7 @@ export const Calendar = memo<CalendarProps>(
     maxDate = MAX_DATE,
     minDate = MIN_DATE,
     value,
+    headerStyle,
     endDate,
     interactive,
     mode = "single",
@@ -210,7 +212,10 @@ export const Calendar = memo<CalendarProps>(
 
     const setYearsView = useCallback(() => toggleView("years"), [toggleView]);
 
-    const flexStyle: StyleProp<ViewStyle> = useMemo(() => styles.flex, []);
+    const flexStyle: StyleProp<ViewStyle> = useMemo(
+      () => [headerStyle, styles.flex],
+      [headerStyle]
+    );
 
     const providerValue: ContextProps = useMemo(
       () => ({
