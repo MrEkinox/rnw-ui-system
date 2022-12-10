@@ -38,7 +38,7 @@ export const ListItemText = memo<ListItemTextProps>(
             noWrap={noWrap}
             gutterBottom={!!secondary}
             loading={loading}
-            width={100}
+            width={150}
             {...primaryProps}
           >
             {primary}

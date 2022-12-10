@@ -32,7 +32,7 @@ export interface TypographyProps extends TextProps {
   secondary?: boolean;
   variant?: TypographyVariant;
   color?: "text" | Colors;
-  width?: number;
+  width?: number | string;
   loading?: boolean;
   vertical?: boolean;
   direction?: "ltr" | "rtl";
@@ -67,7 +67,8 @@ export const Typography = memo<React.PropsWithChildren<TypographyProps>>(
 
         return [
           loading && {
-            width,
+            width: "100%",
+            maxWidth: width,
             backgroundColor: skeletonColor,
             borderRadius: borderRadius / 4,
           },
@@ -131,7 +132,7 @@ export const Typography = memo<React.PropsWithChildren<TypographyProps>>(
             {...props}
             style={style}
           >
-            {children || " "}
+            {loading ? " " : children}
           </Text>
         </View>
       );
@@ -143,7 +144,7 @@ export const Typography = memo<React.PropsWithChildren<TypographyProps>>(
         {...props}
         style={style}
       >
-        {children || " "}
+        {loading ? " " : children}
       </Text>
     );
   }

@@ -26,7 +26,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
     disabled,
     label,
     solo,
-    delay = 500,
+    delay = 300,
     items,
     solid,
     onChange,

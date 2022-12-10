@@ -122,7 +122,7 @@ export const Chip = memo<React.PropsWithChildren<ChipProps>>(
     const style = useMemo(
       (): StyleProp<ViewStyle | TextStyle> => [
         { width: "fit-content" },
-        loading && { width: 70, height: 20 },
+        loading && { width: 70, height: 40 },
         variantStyle,
         sizeStyle,
         props.style,
