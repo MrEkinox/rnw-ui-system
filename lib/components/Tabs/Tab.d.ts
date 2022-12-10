@@ -5,6 +5,7 @@ interface TabProps extends Omit<PressableProps, "onPress" | "onLayout"> {
     color?: Colors;
     value: any;
     selected?: boolean;
+    size?: number;
     onPress: (value: any) => void;
     onLayout: (value: any, event: LayoutChangeEvent) => void;
 }

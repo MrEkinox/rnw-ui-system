@@ -23,6 +23,7 @@ export interface TabsProps extends ScrollViewProps {
   items: TabItem[];
   color?: Colors;
   onChange?: (newValue: any) => void;
+  size?: number;
 }
 
 export const Tabs = memo<TabsProps>(
@@ -33,6 +34,7 @@ export const Tabs = memo<TabsProps>(
     onChange,
     color = "primary",
     style,
+    size,
     ...props
   }) => {
     const theme = useTheme();
@@ -119,6 +121,7 @@ export const Tabs = memo<TabsProps>(
             value={item.value}
             disabled={disabled}
             key={index}
+            size={size}
             selected={index === selectedIndex}
             color={themeColor}
             onPress={onChangeIndex}

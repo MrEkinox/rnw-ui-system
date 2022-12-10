@@ -11,5 +11,6 @@ export interface TabsProps extends ScrollViewProps {
     items: TabItem[];
     color?: Colors;
     onChange?: (newValue: any) => void;
+    size?: number;
 }
 export declare const Tabs: React.NamedExoticComponent<TabsProps>;

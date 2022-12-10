@@ -15,12 +15,22 @@ interface TabProps extends Omit<PressableProps, "onPress" | "onLayout"> {
   color?: Colors;
   value: any;
   selected?: boolean;
+  size?: number;
   onPress: (value: any) => void;
   onLayout: (value: any, event: LayoutChangeEvent) => void;
 }
 
 export const Tab = memo<React.PropsWithChildren<TabProps>>(
-  ({ color, selected, value, children, onPress, onLayout, ...props }) => {
+  ({
+    color,
+    selected,
+    value,
+    size = 10,
+    children,
+    onPress,
+    onLayout,
+    ...props
+  }) => {
     const hover = useHover();
     const theme = useTheme();
 
@@ -31,10 +41,10 @@ export const Tab = memo<React.PropsWithChildren<TabProps>>(
     const style: StyleProp<ViewStyle> = useMemo(
       () => ({
         opacity: hover.isActive ? 0.5 : 1,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingVertical: size,
+        paddingHorizontal: size * 2,
       }),
-      [hover.isActive]
+      [hover.isActive, size]
     );
 
     const onSelectTab = useCallback(() => onPress(value), [onPress, value]);
