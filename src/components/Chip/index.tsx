@@ -16,10 +16,19 @@ export interface ChipProps extends Omit<PressableProps, "style"> {
   size?: "small" | "medium" | "large";
   variant?: "contained" | "outlined" | "text" | "hovered" | "fade";
   style?: StyleProp<ViewStyle>;
+  loading?: boolean;
 }
 
 export const Chip = memo<React.PropsWithChildren<ChipProps>>(
-  ({ children, size, disabled, variant, color = "primary", ...props }) => {
+  ({
+    children,
+    size,
+    disabled,
+    variant,
+    color = "primary",
+    loading,
+    ...props
+  }) => {
     const theme = useTheme();
     const hover = useHover();
 
@@ -113,17 +122,18 @@ export const Chip = memo<React.PropsWithChildren<ChipProps>>(
     const style = useMemo(
       (): StyleProp<ViewStyle | TextStyle> => [
         { width: "fit-content" },
+        loading && { width: 70, height: 20 },
         variantStyle,
         sizeStyle,
         props.style,
       ],
-      [variantStyle, sizeStyle, props.style]
+      [variantStyle, loading, sizeStyle, props.style]
     );
 
     return (
       <Pressable
         {...hover.handlers}
-        disabled={disabled || !props.onPress}
+        disabled={disabled || loading || !props.onPress}
         nativeID="chip"
         {...props}
         style={style}

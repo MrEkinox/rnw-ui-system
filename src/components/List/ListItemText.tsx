@@ -10,6 +10,7 @@ export interface ListItemTextProps extends ViewProps {
   primaryProps?: TypographyProps;
   secondaryProps?: TypographyProps;
   noWrap?: boolean;
+  loading?: boolean;
 }
 
 export const ListItemText = memo<ListItemTextProps>(
@@ -21,6 +22,7 @@ export const ListItemText = memo<ListItemTextProps>(
     secondaryVariant = "body2",
     secondaryProps,
     noWrap,
+    loading,
     ...props
   }) => {
     const containerStyle = useMemo(
@@ -35,6 +37,8 @@ export const ListItemText = memo<ListItemTextProps>(
             variant={primaryVariant}
             noWrap={noWrap}
             gutterBottom={!!secondary}
+            loading={loading}
+            width={100}
             {...primaryProps}
           >
             {primary}
@@ -45,6 +49,8 @@ export const ListItemText = memo<ListItemTextProps>(
             variant={secondaryVariant}
             noWrap={noWrap}
             secondary
+            loading={loading}
+            width={200}
             {...secondaryProps}
           >
             {secondary}

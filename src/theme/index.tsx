@@ -10,14 +10,16 @@ import merge from "deepmerge";
 import { createContext } from "react";
 import { SnackbarProvider } from "..";
 
-export type Colors =
+export type ThemeColor =
   | "primary"
   | "secondary"
   | "error"
   | "info"
   | "success"
-  | "warning"
-  | string;
+  | "skeleton"
+  | "warning";
+
+export type Colors = ThemeColor | string;
 
 type DeepPartial<T> = T extends object
   ? {
@@ -55,6 +57,7 @@ export interface PaletteOptions {
   success: string;
   error: string;
   warning: string;
+  skeleton: string;
   info: string;
   text: string;
   background: PaletteBackgroundOptions;
@@ -95,6 +98,7 @@ const DefaultLightTheme: DefaultThemeOptions = {
       default: "#f5f5f5",
       card: "#FFF",
     },
+    skeleton: "#bbb9c720",
     disabled: "#bbb9c780",
     divider: "#3D5AFE",
   },

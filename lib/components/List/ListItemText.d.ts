@@ -9,5 +9,6 @@ export interface ListItemTextProps extends ViewProps {
     primaryProps?: TypographyProps;
     secondaryProps?: TypographyProps;
     noWrap?: boolean;
+    loading?: boolean;
 }
 export declare const ListItemText: React.NamedExoticComponent<ListItemTextProps>;

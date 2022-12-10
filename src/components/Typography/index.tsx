@@ -32,7 +32,7 @@ export interface TypographyProps extends TextProps {
   secondary?: boolean;
   variant?: TypographyVariant;
   color?: "text" | Colors;
-  defaultWidth?: number;
+  width?: number;
   loading?: boolean;
   vertical?: boolean;
   direction?: "ltr" | "rtl";
@@ -47,7 +47,7 @@ export const Typography = memo<React.PropsWithChildren<TypographyProps>>(
     variant,
     loading,
     secondary,
-    defaultWidth,
+    width,
     vertical,
     direction,
     color = "text",
@@ -62,13 +62,14 @@ export const Typography = memo<React.PropsWithChildren<TypographyProps>>(
       (curTheme) => {
         const fontFamily = curTheme.typography.fontFamily;
         const fontColor = curTheme.palette[color] || color;
-        const disabledColor = curTheme.palette.disabled;
+        const skeletonColor = curTheme.palette.skeleton;
+        const borderRadius = curTheme.borderRadius;
 
         return [
           loading && {
-            width: defaultWidth,
-            backgroundColor: disabledColor,
-            borderRadius: 5,
+            width,
+            backgroundColor: skeletonColor,
+            borderRadius: borderRadius / 4,
           },
           vertical && {
             transform: [{ rotate: direction === "ltr" ? "-90deg" : "90deg" }],
@@ -93,7 +94,7 @@ export const Typography = memo<React.PropsWithChildren<TypographyProps>>(
       [
         color,
         loading,
-        defaultWidth,
+        width,
         vertical,
         direction,
         align,
@@ -107,8 +108,8 @@ export const Typography = memo<React.PropsWithChildren<TypographyProps>>(
     );
 
     const onLayout = useCallback((event: LayoutChangeEvent) => {
-      const { width, height } = event.nativeEvent.layout;
-      setDimensions({ width, height });
+      const { width: layoutWidth, height } = event.nativeEvent.layout;
+      setDimensions({ width: layoutWidth, height });
     }, []);
 
     const verticalStyle = useMemo(

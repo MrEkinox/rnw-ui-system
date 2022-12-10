@@ -9,7 +9,7 @@ export interface TypographyProps extends TextProps {
     secondary?: boolean;
     variant?: TypographyVariant;
     color?: "text" | Colors;
-    defaultWidth?: number;
+    width?: number;
     loading?: boolean;
     vertical?: boolean;
     direction?: "ltr" | "rtl";

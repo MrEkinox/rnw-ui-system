@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleProp, TextStyle, ViewStyle } from "react-native";
-export declare type Colors = "primary" | "secondary" | "error" | "info" | "success" | "warning" | string;
+export declare type ThemeColor = "primary" | "secondary" | "error" | "info" | "success" | "skeleton" | "warning";
+export declare type Colors = ThemeColor | string;
 declare type DeepPartial<T> = T extends object ? {
     [P in keyof T]?: DeepPartial<T[P]>;
 } : T;
@@ -32,6 +33,7 @@ export interface PaletteOptions {
     success: string;
     error: string;
     warning: string;
+    skeleton: string;
     info: string;
     text: string;
     background: PaletteBackgroundOptions;
