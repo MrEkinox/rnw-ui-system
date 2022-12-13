@@ -254,7 +254,6 @@ export const TextField = memo<TextFieldProps>(
             style={styles.countText}
             color={currentColor}
             textVariant="overline"
-            size={10}
           >
             {`${value.length}/${props.maxLength}`}
           </Badge>
