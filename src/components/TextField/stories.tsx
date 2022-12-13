@@ -36,6 +36,21 @@ export const Base = () => (
   </View>
 );
 
+export const DisplayMaxCount = () => (
+  <View style={{ padding: 50 }}>
+    <Card>
+      <CardContent>
+        <TextField
+          label="Bonjour, je suis un label"
+          value="dzdjzid"
+          displayMaxCount
+          maxLength={30}
+        />
+      </CardContent>
+    </Card>
+  </View>
+);
+
 export const HelperText = () => {
   const [value, setValue] = useState("");
 

@@ -19,6 +19,7 @@ import { Typography, TypographyProps } from "../Typography";
 import ColorJS from "color";
 import { computeBorderRadius, renderIcon } from "../../utils";
 import { useThemeStyle } from "../../hooks/useThemeStyle";
+import { Badge } from "../Badge";
 
 export interface TextFieldHelperProps extends TypographyProps {
   error?: boolean;
@@ -134,6 +135,7 @@ export interface TextFieldProps extends Omit<TextInputProps, "onChange"> {
   containerStyle?: StyleProp<ViewStyle>;
   autoGrow?: boolean;
   name?: string;
+  displayMaxCount?: boolean;
 }
 
 export const TextField = memo<TextFieldProps>(
@@ -146,6 +148,7 @@ export const TextField = memo<TextFieldProps>(
     startIcon,
     endIcon,
     required,
+    displayMaxCount,
     error,
     onBlur,
     onFocus,
@@ -244,6 +247,20 @@ export const TextField = memo<TextFieldProps>(
 
     const placeholderTextColor = ColorJS(fontColor).fade(0.7).toString();
 
+    const maxCountText = useMemo(
+      () =>
+        displayMaxCount && props.maxLength ? (
+          <Badge
+            style={styles.countText}
+            color={currentColor}
+            textVariant="caption"
+          >
+            {`${value.length}/${props.maxLength}`}
+          </Badge>
+        ) : null,
+      [currentColor, displayMaxCount, props.maxLength, value.length]
+    );
+
     return (
       <>
         <View style={style}>
@@ -275,7 +292,7 @@ export const TextField = memo<TextFieldProps>(
               selectionColor={themeColor}
             />
           </View>
-          {memoEndIcon}
+          {memoEndIcon || maxCountText}
         </View>
         <TextFieldHelper color={color} error={error}>
           {helperText}
@@ -295,5 +312,8 @@ const styles = StyleSheet.create({
     minHeight: 44,
     alignItems: "center",
     flexDirection: "row",
+  },
+  countText: {
+    alignSelf: "flex-end",
   },
 });

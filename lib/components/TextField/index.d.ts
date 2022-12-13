@@ -28,5 +28,6 @@ export interface TextFieldProps extends Omit<TextInputProps, "onChange"> {
     containerStyle?: StyleProp<ViewStyle>;
     autoGrow?: boolean;
     name?: string;
+    displayMaxCount?: boolean;
 }
 export declare const TextField: React.NamedExoticComponent<TextFieldProps>;
