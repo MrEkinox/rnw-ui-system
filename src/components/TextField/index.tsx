@@ -253,7 +253,8 @@ export const TextField = memo<TextFieldProps>(
           <Badge
             style={styles.countText}
             color={currentColor}
-            textVariant="caption"
+            textVariant="overline"
+            size={10}
           >
             {`${value.length}/${props.maxLength}`}
           </Badge>
@@ -314,6 +315,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   countText: {
-    alignSelf: "flex-end",
+    position: "absolute",
+    right: 10,
+    bottom: 10,
   },
 });
