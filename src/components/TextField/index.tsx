@@ -307,6 +307,7 @@ TextField.displayName = "TextField";
 const styles = StyleSheet.create({
   flex: { flex: 1, height: "100%", alignSelf: "flex-start" },
   container: {
+    overflow: "hidden",
     borderWidth: 2,
     padding: 5,
     minHeight: 44,

@@ -40,7 +40,7 @@ export const Badge = memo<React.PropsWithChildren<BadgeProps>>(
     const style = useMemo(
       (): StyleProp<ViewStyle> => [
         styles.container,
-        computeBorderRadius(borderRadius),
+        computeBorderRadius(borderRadius / 2),
         { backgroundColor: themeColor, padding: size },
         props.style,
       ],
