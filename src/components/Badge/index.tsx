@@ -9,6 +9,7 @@ import {
 import { Colors, useTheme } from "../../theme";
 import ColorJS from "color";
 import { Typography, TypographyVariant } from "../Typography";
+import { computeBorderRadius } from "../../utils";
 
 export interface BadgeProps extends ViewProps {
   size?: number;
@@ -20,6 +21,7 @@ export const Badge = memo<React.PropsWithChildren<BadgeProps>>(
   ({ children, size = 5, color = "primary", textVariant, ...props }) => {
     const theme = useTheme();
 
+    const borderRadius = theme.borderRadius;
     const themeColor = theme.palette[color] || color;
 
     const content = useMemo(() => {
@@ -38,10 +40,11 @@ export const Badge = memo<React.PropsWithChildren<BadgeProps>>(
     const style = useMemo(
       (): StyleProp<ViewStyle> => [
         styles.container,
+        computeBorderRadius(borderRadius),
         { backgroundColor: themeColor, padding: size },
         props.style,
       ],
-      [size, props.style, themeColor]
+      [size, props.style, borderRadius, themeColor]
     );
 
     return (
@@ -55,7 +58,6 @@ Badge.displayName = "Badge";
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 500,
     width: "fit-content",
   },
 });

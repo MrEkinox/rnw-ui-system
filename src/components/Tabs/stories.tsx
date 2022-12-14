@@ -17,6 +17,13 @@ export const Base = () => {
           { label: "Tab1", value: "tab1" },
           { label: "Largeeeeeeeeeeeeeeeee", value: "tab2" },
           { label: "Tab2", value: "tab3" },
+          { label: "Tab1", value: "tab4" },
+          { label: "Largeeeeeeeeeeeeeeeee", value: "tab5" },
+          { label: "Tab2", value: "tab6" },
+          { label: "Tab1", value: "tab7" },
+          { label: "Largeeeeeeeeeeeeeeeee", value: "tab8" },
+          { label: "Tab2", value: "tab9" },
+          { label: "Tab1", value: "tab10" },
         ]}
       />
     </View>

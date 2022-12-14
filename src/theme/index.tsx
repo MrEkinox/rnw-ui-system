@@ -168,8 +168,8 @@ const DefaultLightTheme: DefaultThemeOptions = {
     },
     overline: {
       fontSize: 10,
+      lineHeight: 15,
       letterSpacing: 1.5,
-      lineHeight: 1,
       fontWeight: "400",
       textTransform: "uppercase",
     },
