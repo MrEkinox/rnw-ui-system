@@ -247,18 +247,22 @@ export const TextField = memo<TextFieldProps>(
 
     const placeholderTextColor = ColorJS(fontColor).fade(0.7).toString();
 
+    const badgeStyle = useThemeStyle(
+      (curTheme) => [
+        styles.countText,
+        { borderBottomRightRadius: curTheme.borderRadius / 1.5 },
+      ],
+      []
+    );
+
     const maxCountText = useMemo(
       () =>
         displayMaxCount && props.maxLength ? (
-          <Badge
-            style={styles.countText}
-            color={currentColor}
-            textVariant="overline"
-          >
+          <Badge style={badgeStyle} color={currentColor} textVariant="overline">
             {`${value.length}/${props.maxLength}`}
           </Badge>
         ) : null,
-      [currentColor, displayMaxCount, props.maxLength, value.length]
+      [currentColor, badgeStyle, displayMaxCount, props.maxLength, value.length]
     );
 
     return (
@@ -307,7 +311,6 @@ TextField.displayName = "TextField";
 const styles = StyleSheet.create({
   flex: { flex: 1, height: "100%", alignSelf: "flex-start" },
   container: {
-    overflow: "hidden",
     borderWidth: 2,
     padding: 5,
     minHeight: 44,
@@ -317,7 +320,6 @@ const styles = StyleSheet.create({
   countText: {
     position: "absolute",
     right: 0,
-    borderBottomRightRadius: 0,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
     bottom: 0,
