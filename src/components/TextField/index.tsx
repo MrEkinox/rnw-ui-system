@@ -319,9 +319,9 @@ const styles = StyleSheet.create({
   },
   countText: {
     position: "absolute",
-    right: 0,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
-    bottom: 0,
+    right: -2,
+    bottom: -2,
   },
 });
