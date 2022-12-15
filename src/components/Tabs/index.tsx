@@ -80,7 +80,7 @@ export const Tabs = memo<TabsProps>(
       (curTheme) => [
         {
           alignItems: "center",
-          width: "fit-content",
+          width: "max-content",
           borderRadius: curTheme.borderRadius,
           backgroundColor: curTheme.palette.background.card,
         },
