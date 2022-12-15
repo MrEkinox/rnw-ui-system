@@ -4,6 +4,7 @@ import {
   LayoutChangeEvent,
   ScrollView,
   ScrollViewProps,
+  StyleProp,
   ViewStyle,
 } from "react-native";
 import { Colors, useTheme } from "../../theme";
@@ -24,6 +25,7 @@ export interface TabsProps extends ScrollViewProps {
   color?: Colors;
   onChange?: (newValue: any) => void;
   size?: number;
+  scrollStyle?: StyleProp<ViewStyle>;
 }
 
 export const Tabs = memo<TabsProps>(
@@ -35,6 +37,7 @@ export const Tabs = memo<TabsProps>(
     color = "primary",
     style,
     size,
+    scrollStyle,
     ...props
   }) => {
     const theme = useTheme();
@@ -114,7 +117,12 @@ export const Tabs = memo<TabsProps>(
     );
 
     return (
-      <ScrollView horizontal {...props} contentContainerStyle={containerStyle}>
+      <ScrollView
+        horizontal
+        {...props}
+        style={scrollStyle}
+        contentContainerStyle={containerStyle}
+      >
         {selectedIndex !== -1 && <Animated.View style={colorStyle} />}
         {items.map((item, index) => (
           <Tab

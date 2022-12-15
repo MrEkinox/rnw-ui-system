@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollViewProps } from "react-native";
+import { ScrollViewProps, StyleProp, ViewStyle } from "react-native";
 import { Colors } from "../../theme";
 export interface TabItem {
     label: React.ReactNode | string;
@@ -12,5 +12,6 @@ export interface TabsProps extends ScrollViewProps {
     color?: Colors;
     onChange?: (newValue: any) => void;
     size?: number;
+    scrollStyle?: StyleProp<ViewStyle>;
 }
 export declare const Tabs: React.NamedExoticComponent<TabsProps>;
