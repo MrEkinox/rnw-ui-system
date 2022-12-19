@@ -29,7 +29,7 @@ export const Badge = memo<React.PropsWithChildren<BadgeProps>>(
         const fontColor = ColorJS(themeColor).isDark() ? "#FFF" : "#000";
 
         return (
-          <Typography variant={textVariant} color={fontColor}>
+          <Typography variant={textVariant} align="center" color={fontColor}>
             {children}
           </Typography>
         );

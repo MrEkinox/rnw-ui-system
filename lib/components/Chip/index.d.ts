@@ -7,5 +7,7 @@ export interface ChipProps extends Omit<PressableProps, "style"> {
     variant?: "contained" | "outlined" | "text" | "hovered" | "fade";
     style?: StyleProp<ViewStyle>;
     loading?: boolean;
+    startIcon?: React.ReactNode;
+    endIcon?: React.ReactNode;
 }
 export declare const Chip: React.NamedExoticComponent<React.PropsWithChildren<ChipProps>>;

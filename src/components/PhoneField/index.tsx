@@ -107,6 +107,7 @@ export const PhoneField = memo<PhoneFieldProps>(
           searchable
           onChange={onChangeCode}
           renderItem={renderItem}
+          disabled={disabled}
         >
           <Button
             pointerEvents="none"

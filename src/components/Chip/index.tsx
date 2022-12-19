@@ -10,6 +10,7 @@ import { Colors, useTheme } from "../../theme";
 import ColorJS from "color";
 import { Typography } from "../Typography";
 import { useHover } from "../../hooks/useHover";
+import { renderIcon } from "../../utils";
 
 export interface ChipProps extends Omit<PressableProps, "style"> {
   color?: Colors;
@@ -17,6 +18,8 @@ export interface ChipProps extends Omit<PressableProps, "style"> {
   variant?: "contained" | "outlined" | "text" | "hovered" | "fade";
   style?: StyleProp<ViewStyle>;
   loading?: boolean;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
 }
 
 export const Chip = memo<React.PropsWithChildren<ChipProps>>(
@@ -27,6 +30,8 @@ export const Chip = memo<React.PropsWithChildren<ChipProps>>(
     variant,
     color = "primary",
     loading,
+    startIcon,
+    endIcon,
     ...props
   }) => {
     const theme = useTheme();
@@ -36,11 +41,26 @@ export const Chip = memo<React.PropsWithChildren<ChipProps>>(
     const themeColor = theme.palette[color] || color;
     const borderWidth = variant === "outlined" ? 2 : 0;
 
-    const containedColor = ColorJS(
-      ColorJS(themeColor).isDark() ? "#FFF" : "#000"
-    )
+    const contrastColor = ColorJS(themeColor).isDark() ? "#FFF" : "#000";
+    const containedColor = ColorJS(contrastColor)
       .fade(disabled ? 0.5 : 0)
       .toString();
+
+    const memoStartIcon = useMemo(() => {
+      return renderIcon(startIcon, {
+        color: containedColor,
+        style: { marginRight: 5 },
+      });
+    }, [containedColor, startIcon]);
+
+    const memoEndIcon = useMemo(
+      () =>
+        renderIcon(endIcon, {
+          color: containedColor,
+          style: { marginLeft: 5 },
+        }),
+      [containedColor, endIcon]
+    );
 
     const variantStyle: StyleProp<ViewStyle | TextStyle> = useMemo(() => {
       if (variant === "outlined") {
@@ -121,7 +141,7 @@ export const Chip = memo<React.PropsWithChildren<ChipProps>>(
 
     const style = useMemo(
       (): StyleProp<ViewStyle | TextStyle> => [
-        { width: "fit-content" },
+        { width: "fit-content", flexDirection: "row", alignItems: "center" },
         loading && { width: 70, height: 30 },
         variantStyle,
         sizeStyle,
@@ -138,7 +158,9 @@ export const Chip = memo<React.PropsWithChildren<ChipProps>>(
         {...props}
         style={style}
       >
+        {memoStartIcon}
         {content}
+        {memoEndIcon}
       </Pressable>
     );
   }
