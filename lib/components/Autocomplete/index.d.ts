@@ -7,6 +7,7 @@ export declare type AutocompleteProps = {
     solo?: boolean;
     solid?: boolean;
     delay?: number;
+    autoFiltering?: boolean;
     onChange?: (newValue: string) => void;
 } & Omit<SelectFieldProps, "multiple" | "value" | "onChange" | "searchable">;
 export declare const Autocomplete: React.NamedExoticComponent<React.PropsWithChildren<AutocompleteProps>>;

@@ -15,6 +15,7 @@ export type AutocompleteProps = {
   solo?: boolean;
   solid?: boolean;
   delay?: number;
+  autoFiltering?: boolean;
   onChange?: (newValue: string) => void;
 } & Omit<SelectFieldProps, "multiple" | "value" | "onChange" | "searchable">;
 
@@ -33,6 +34,7 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
     onSearch,
     renderItem,
     color = "primary",
+    autoFiltering = true,
     flatListProps,
     clearText,
     clearable,
@@ -94,18 +96,18 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
       [color, onSelect, renderItem]
     );
 
-    const filteredItems = useMemo(
-      () =>
-        items?.filter(
+    const filteredItems = useMemo(() => {
+      if (autoFiltering)
+        return items?.filter(
           ({ label: label2 }) =>
             label2 !== currentText &&
             label2
               .toLowerCase()
               .normalize("NFD")
               .includes(currentText.toLowerCase().normalize("NFD"))
-        ),
-      [items, currentText]
-    );
+        );
+      return items;
+    }, [items, autoFiltering, currentText]);
 
     const currentItems = useMemo(() => {
       if (clearable && clearText) {
