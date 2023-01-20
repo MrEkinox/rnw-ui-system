@@ -86,7 +86,7 @@ export const Checkbox = memo<CheckboxProps>(
           />
         </Pressable>
         {label && (
-          <Typography variant="body1" style={styles.label}>
+          <Typography variant="subtitle2" style={styles.label}>
             {label}
           </Typography>
         )}

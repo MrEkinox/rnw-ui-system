@@ -53,7 +53,7 @@ export const SelectFieldItem = memo<
         style={style}
       >
         {typeof children === "string" ? (
-          <Typography variant="body1">{children}</Typography>
+          <Typography variant="subtitle2">{children}</Typography>
         ) : (
           children
         )}
