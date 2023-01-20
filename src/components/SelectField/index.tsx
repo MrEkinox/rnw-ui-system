@@ -190,7 +190,7 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
 
     const getIsSelected = useCallback(
       (curValue: string) => {
-        if (!value) return false;
+        if (!value) return curValue === "clear";
         if (typeof value === "string") return value === curValue;
         return value?.findIndex((cValue) => cValue === curValue) !== -1;
       },
