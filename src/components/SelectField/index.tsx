@@ -18,6 +18,7 @@ import { SelectFieldItem } from "./SelectFieldItem";
 import { isMobile } from "../../utils";
 import { useTheme } from "../../theme";
 import { Typography } from "../Typography";
+import { Checkbox } from "../Checkbox";
 
 export interface SelectFieldItemOptions {
   label: string;
@@ -214,11 +215,20 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
             value={item.value}
             onPress={onChangeValue}
           >
-            {renderItem?.(item, isSelected) || item.label}
+            {renderItem?.(item, isSelected) || multiple ? (
+              <Checkbox
+                disabled={item.disabled}
+                value={isSelected}
+                label={item.label}
+                pointerEvents="none"
+              />
+            ) : (
+              item.label
+            )}
           </SelectFieldItem>
         );
       },
-      [color, getIsSelected, onChangeValue, renderItem]
+      [color, getIsSelected, multiple, onChangeValue, renderItem]
     );
 
     const endIcon = useMemo(

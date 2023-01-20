@@ -33,7 +33,7 @@ export const SelectFieldItem = memo<
           .fade(0.8)
           .toString();
         return {
-          paddingHorizontal: 20,
+          paddingHorizontal: 15,
           paddingVertical: 10,
           backgroundColor: selected ? selectedColor : undefined,
           opacity: hover.isActive || disabled ? 0.5 : 1,
@@ -53,7 +53,7 @@ export const SelectFieldItem = memo<
         style={style}
       >
         {typeof children === "string" ? (
-          <Typography>{children}</Typography>
+          <Typography variant="body2">{children}</Typography>
         ) : (
           children
         )}

@@ -86,7 +86,7 @@ export const Checkbox = memo<CheckboxProps>(
           />
         </Pressable>
         {label && (
-          <Typography variant="body1" style={styles.label}>
+          <Typography variant="body2" style={styles.label}>
             {label}
           </Typography>
         )}
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    width: 25,
-    height: 25,
+    width: 20,
+    height: 20,
   },
 });
