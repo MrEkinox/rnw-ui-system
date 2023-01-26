@@ -2,7 +2,7 @@ import React from "react";
 import { TextFieldProps } from "../TextField";
 export declare type DateFieldProps = Omit<TextFieldProps, "value" | "onChange"> & {
     value?: Date | null;
-    onChange?: (newValue?: Date) => void;
+    onChange?: (newValue?: Date | null) => void;
     format?: string;
     maxDate?: Date | null;
     minDate?: Date | null;

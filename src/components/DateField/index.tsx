@@ -14,7 +14,7 @@ dayjs.extend(customParseFormat);
 
 export type DateFieldProps = Omit<TextFieldProps, "value" | "onChange"> & {
   value?: Date | null;
-  onChange?: (newValue?: Date) => void;
+  onChange?: (newValue?: Date | null) => void;
   format?: string;
   maxDate?: Date | null;
   minDate?: Date | null;
@@ -31,8 +31,12 @@ export const NativeDateField = memo<React.PropsWithChildren<DateFieldProps>>(
 
     const onChangeValue = useCallback(
       (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = dayjs(event.target.value).toDate();
-        onChange?.(newValue);
+        if (event.target.value) {
+          const newValue = dayjs(event.target.value).toDate();
+          onChange?.(newValue);
+        } else {
+          onChange?.(null);
+        }
       },
       [onChange]
     );
@@ -166,7 +170,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     height: "100%",
-    width: "100%",
+    width: 50,
     position: "absolute",
     opacity: 0,
   },
