@@ -19,6 +19,7 @@ import { isMobile } from "../../utils";
 import { useTheme } from "../../theme";
 import { Typography } from "../Typography";
 import { Checkbox } from "../Checkbox";
+import { Divider } from "../Divider";
 
 export interface SelectFieldItemOptions {
   label: string;
@@ -282,6 +283,8 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
       [emptyText]
     );
 
+    const separator = useCallback(() => <Divider />, []);
+
     return (
       <NativeSelectField
         value={value}
@@ -320,6 +323,7 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
                 stickyHeaderIndices={
                   searchable ? stickyHeaderIndices : undefined
                 }
+                ItemSeparatorComponent={separator}
                 removeClippedSubviews
                 ListEmptyComponent={emptyList}
                 renderItem={renderOption}

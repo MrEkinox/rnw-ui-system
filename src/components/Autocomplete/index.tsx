@@ -7,6 +7,7 @@ import { SelectFieldItem } from "../SelectField/SelectFieldItem";
 import { SelectFieldItemOptions, SelectFieldProps } from "../SelectField";
 import { useDebouncedCallback } from "use-debounce";
 import { Card } from "../Card";
+import { Divider } from "../Divider";
 
 export type AutocompleteProps = {
   loading?: boolean;
@@ -116,11 +117,14 @@ export const Autocomplete = memo<React.PropsWithChildren<AutocompleteProps>>(
       return filteredItems;
     }, [filteredItems, clearable, clearText]);
 
+    const separator = useCallback(() => <Divider />, []);
+
     const content = (
       <FlatList
         data={currentItems}
         removeClippedSubviews
         renderItem={renderOption}
+        ItemSeparatorComponent={separator}
         style={styles.list}
         {...flatListProps}
       />

@@ -95,15 +95,19 @@ export const Slider = memo<SliderProps>(
       [currentValues]
     );
 
-    const onMoveEnd = useCallback(() => {
-      setInteractionIndex(-1);
+    useEffect(() => {
+      if (interactionIndex === -1) return;
       const steppedCurrendValues = currentValues.map(
         (cValue) => Math.round(cValue / step) * step
       );
       if (typeof value === "number") {
         onChange(steppedCurrendValues[0]);
       } else onChange(steppedCurrendValues);
-    }, [currentValues, onChange, step, value]);
+    }, [currentValues, interactionIndex, onChange, step, value]);
+
+    const onMoveEnd = useCallback(() => {
+      setInteractionIndex(-1);
+    }, []);
 
     const onMove = useCallback(
       (_, { moveX, x0 }: PanResponderGestureState) => {

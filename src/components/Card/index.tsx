@@ -14,17 +14,20 @@ export const Card = memo<React.PropsWithChildren<CardProps>>(
   ({
     children,
     square,
-    variant,
+    variant = "blank",
     elevation = 5,
-    color = "primary",
+    color,
     style,
     ...props
   }) => {
     const theme = useTheme();
 
     const borderRadius = square ? 0 : theme.borderRadius;
-    const backgroundColor = theme.palette.background.card;
-    const themeColor = theme.palette[color] || color;
+    const themeColor = color
+      ? theme.palette[color] || color
+      : theme.palette.primary;
+    const backgroundColor =
+      color && variant === "blank" ? themeColor : theme.palette.background.card;
 
     const outlinedStyle = useMemo((): StyleProp<ViewStyle> => {
       return {

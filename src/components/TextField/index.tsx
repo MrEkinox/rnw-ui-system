@@ -162,7 +162,6 @@ export const TextField = memo<TextFieldProps>(
   }) => {
     const theme = useTheme();
 
-    const inputRef = useRef<TextInput>(null);
     const [isFocused, setIsFocused] = useState(false);
     const [height, setHeight] = useState<"auto" | number>("auto");
     const labelIsActive = !!value || isFocused || !!props.placeholder;
@@ -280,7 +279,6 @@ export const TextField = memo<TextFieldProps>(
               {label}
             </TextFieldLabel>
             <TextInput
-              ref={inputRef}
               accessibilityLabel={label}
               nativeID={name}
               {...props}
