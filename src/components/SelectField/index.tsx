@@ -216,16 +216,17 @@ export const SelectField = memo<React.PropsWithChildren<SelectFieldProps>>(
             value={item.value}
             onPress={onChangeValue}
           >
-            {renderItem?.(item, isSelected) || multiple ? (
-              <Checkbox
-                disabled={item.disabled}
-                value={isSelected}
-                label={item.label}
-                pointerEvents="none"
-              />
-            ) : (
-              item.label
-            )}
+            {renderItem?.(item, isSelected) ||
+              (multiple ? (
+                <Checkbox
+                  disabled={item.disabled}
+                  value={isSelected}
+                  label={item.label}
+                  pointerEvents="none"
+                />
+              ) : (
+                item.label
+              ))}
           </SelectFieldItem>
         );
       },

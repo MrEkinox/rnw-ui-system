@@ -1,7 +1,7 @@
 import React from "react";
 import { PressableProps, StyleProp, ViewStyle } from "react-native";
 import { Colors } from "../../theme";
-export interface ButtonProps extends Omit<PressableProps, "style"> {
+export interface ButtonProps extends Omit<PressableProps, "style" | "children"> {
     color?: Colors;
     disabled?: boolean;
     endIcon?: React.ReactNode;

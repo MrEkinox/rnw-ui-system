@@ -32,9 +32,8 @@ export const SliderField = memo(
     const fontColor = theme.palette.text;
     const themeColor = theme.palette[error ? "error" : color] || color;
     const disabledColor = theme.palette.disabled;
-    const [currentText, setCurrentText] = useState(
-      value?.toString() || minValue.toString()
-    );
+    const defaultText = value?.toString() || minValue.toString();
+    const [currentText, setCurrentText] = useState(defaultText);
 
     const onChangeValue = useCallback(
       (newValue) => onChange?.(newValue),
@@ -42,19 +41,17 @@ export const SliderField = memo(
     );
 
     useEffect(() => {
-      setCurrentText(value?.toString() || minValue.toString());
-    }, [minValue, value]);
+      setCurrentText(defaultText);
+    }, [defaultText]);
 
-    const onChangeTextValue = useCallback(
-      (newValue: string) => {
-        if (!newValue) setCurrentText(newValue);
-        const newIntValue = parseFloat(newValue);
-        if (newIntValue <= maxValue && newIntValue >= minValue) {
-          onChange?.(newIntValue);
-        }
-      },
-      [maxValue, minValue, onChange]
-    );
+    const onBlurTextField = useCallback(() => {
+      const newIntValue = parseFloat(currentText);
+      if (newIntValue <= maxValue && newIntValue >= minValue) {
+        onChange?.(newIntValue);
+      } else {
+        setCurrentText(defaultText);
+      }
+    }, [currentText, defaultText, maxValue, minValue, onChange]);
 
     const currentColor = disabled ? disabledColor : themeColor;
 
@@ -75,11 +72,11 @@ export const SliderField = memo(
         {
           color: disabled ? disabledColor : fontColor,
           paddingVertical: 5,
-          width: 25,
+          width: `${currentText.length + 1.5}ch`,
         },
         props.style,
       ],
-      [disabled, disabledColor, fontColor, props.style]
+      [currentText.length, disabled, disabledColor, fontColor, props.style]
     );
 
     return (
@@ -100,7 +97,8 @@ export const SliderField = memo(
                 editable={!disabled}
                 value={currentText}
                 keyboardType="numeric"
-                onChangeText={onChangeTextValue}
+                onChangeText={setCurrentText}
+                onBlur={onBlurTextField}
                 style={inputStyle}
               />
               <Slider

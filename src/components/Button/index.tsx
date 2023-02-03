@@ -29,7 +29,8 @@ const getIconStyle = (
     : { marginRight: -5, marginLeft: 10 };
 };
 
-export interface ButtonProps extends Omit<PressableProps, "style"> {
+export interface ButtonProps
+  extends Omit<PressableProps, "style" | "children"> {
   color?: Colors;
   disabled?: boolean;
   endIcon?: React.ReactNode;
